@@ -11,6 +11,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+const API_URL =
+  "https://dashboard-ekonomi-daerah-production.up.railway.app";
 
 import { Bar } from "react-chartjs-2";
 
@@ -62,15 +64,15 @@ const [formPengangguran, setFormPengangguran] = useState({
 const [editPengangguranId, setEditPengangguranId] = useState(null);
 const [csvFile, setCsvFile] = useState(null);
  useEffect(() => {
-  fetch("http://localhost:5000/api/pdrb")
+  fetch("${API_URL}/api/pdrb")
     .then((res) => res.json())
     .then((data) => setPdrb(data));
 
-  fetch("http://localhost:5000/api/kemiskinan")
+  fetch("${API_URL}/api/kemiskinan")
     .then((res) => res.json())
     .then((data) => setKemiskinan(data));
 
-  fetch("http://localhost:5000/api/pengangguran")
+  fetch("h${API_URL}/api/pengangguran")
     .then((res) => res.json())
     .then((data) => setPengangguran(data));
 }, []);
@@ -86,7 +88,7 @@ const handleUploadCsvPdrb = async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/pdrb/upload",
+      "${API_URL}/api/pdrb/upload",
       {
         method: "POST",
         body: formData,
@@ -97,7 +99,7 @@ const handleUploadCsvPdrb = async () => {
 
     alert(data.message);
 
-    fetch("http://localhost:5000/api/pdrb")
+    fetch("${API_URL}/api/pdrb")
       .then((res) => res.json())
       .then((data) => setPdrb(data));
 
@@ -112,8 +114,8 @@ const handleSubmit = async (e) => {
 
   try {
     const url = editPdrbId
-  ? `http://localhost:5000/api/pdrb/${editPdrbId}`
-  : "http://localhost:5000/api/pdrb";
+  ? `${API_URL}/api/pdrb/${editPdrbId}`
+  : "${API_URL}/api/pdrb";
 
 const method = editPdrbId ? "PUT" : "POST";
 
@@ -138,7 +140,7 @@ const response = await fetch(url, {
     });
     setEditPdrbId(null);
 
-fetch("http://localhost:5000/api/pdrb")
+fetch("${API_URL}/api/pdrb")
   .then((res) => res.json())
   .then((data) => setPdrb(data));
 
@@ -152,8 +154,8 @@ const handleSubmitKemiskinan = async (e) => {
 
   try {
     const url = editKemiskinanId
-  ? `http://localhost:5000/api/kemiskinan/${editKemiskinanId}`
-  : "http://localhost:5000/api/kemiskinan";
+  ? `${API_URL}/api/kemiskinan/${editKemiskinanId}`
+  : "${API_URL}/api/kemiskinan";
 
 const method = editKemiskinanId
   ? "PUT"
@@ -181,7 +183,7 @@ const response = await fetch(url, {
     setEditKemiskinanId(null);
 
     // Refresh data
-    fetch("http://localhost:5000/api/kemiskinan")
+    fetch("${API_URL}/api/kemiskinan")
       .then((res) => res.json())
       .then((data) => setKemiskinan(data));
 
@@ -196,8 +198,8 @@ const handleSubmitPengangguran = async (e) => {
 
   try {
     const url = editPengangguranId
-      ? `http://localhost:5000/api/pengangguran/${editPengangguranId}`
-      : "http://localhost:5000/api/pengangguran";
+      ? `${API_URL}/api/pengangguran/${editPengangguranId}`
+      : "${API_URL}/api/pengangguran";
 
     const method = editPengangguranId
       ? "PUT"
@@ -222,7 +224,7 @@ const handleSubmitPengangguran = async (e) => {
     });
     setEditPengangguranId(null);
 
-    fetch("http://localhost:5000/api/pengangguran")
+    fetch("${API_URL}/api/pengangguran")
       .then((res) => res.json())
       .then((data) => setPengangguran(data));
 
@@ -250,7 +252,7 @@ const handleDeletePdrb = async (id) => {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/pdrb/${id}`,
+      `${API_URL}/api/pdrb/${id}`,
       {
         method: "DELETE",
       }
@@ -260,7 +262,7 @@ const handleDeletePdrb = async (id) => {
 
     alert(data.message);
 
-    fetch("http://localhost:5000/api/pdrb")
+    fetch("${API_URL}/api/pdrb")
       .then((res) => res.json())
       .then((data) => setPdrb(data));
 
@@ -284,7 +286,7 @@ const handleEditKemiskinan = (item) => {
 const handleDeleteKemiskinan = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/kemiskinan/${id}`,
+      `${API_URL}/api/kemiskinan/${id}`,
       {
         method: "DELETE",
       }
@@ -323,7 +325,7 @@ const handleDeletePengangguran = async (id) => {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/pengangguran/${id}`,
+      `${API_URL}/api/pengangguran/${id}`,
       {
         method: "DELETE",
       }
@@ -333,7 +335,7 @@ const handleDeletePengangguran = async (id) => {
 
     alert(data.message);
 
-    fetch("http://localhost:5000/api/pengangguran")
+    fetch("${API_URL}/api/pengangguran")
       .then((res) => res.json())
       .then((data) => setPengangguran(data));
 
