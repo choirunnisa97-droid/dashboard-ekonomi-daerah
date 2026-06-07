@@ -1,7 +1,9 @@
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-import { useEffect, useState } from "react";
-import "./App.css";
+const API_URL =
+  "https://dashboard-ekonomi-daerah-production.up.railway.app";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { useEffect, useState } from 'react';
+import './App.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,11 +12,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-const API_URL =
-  "https://dashboard-ekonomi-daerah-production.up.railway.app";
+} from 'chart.js';
 
-import { Bar } from "react-chartjs-2";
+import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -29,11 +29,11 @@ function App() {
   const [pdrb, setPdrb] = useState([]);
   const [kemiskinan, setKemiskinan] = useState([]);
   const [pengangguran, setPengangguran] = useState([]);
-  const [searchPdrb, setSearchPdrb] = useState("");
+  const [searchPdrb, setSearchPdrb] = useState('');
 
-const [searchKemiskinan, setSearchKemiskinan] = useState("");
+const [searchKemiskinan, setSearchKemiskinan] = useState('');
 
-const [searchPengangguran, setSearchPengangguran] = useState("");
+const [searchPengangguran, setSearchPengangguran] = useState('');
 const [currentPagePdrb, setCurrentPagePdrb] = useState(1);
 const [currentPageKemiskinan, setCurrentPageKemiskinan] = useState(1);
 const [currentPagePengangguran, setCurrentPagePengangguran] = useState(1);
@@ -42,55 +42,55 @@ const itemsPerPage = 5;
 
 
   const [formPdrb, setFormPdrb] = useState({
-  tahun: "",
-  kota: "",
-  sektor: "",
-  nilai_pdrb: "",
+  tahun: '',
+  kota: '',
+  sektor: '',
+  nilai_pdrb: '',
 });
 const [editPdrbId, setEditPdrbId] = useState(null);
 const [editKemiskinanId, setEditKemiskinanId] = useState(null);
 const [formKemiskinan, setFormKemiskinan] = useState({
-  tahun: "",
-  kota: "",
-  jumlah_miskin: "",
-  persentase: "",
+  tahun: '',
+  kota: '',
+  jumlah_miskin: '',
+  persentase: '',
 });
 const [formPengangguran, setFormPengangguran] = useState({
-  tahun: "",
-  kota: "",
-  tpt: "",
+  tahun: '',
+  kota: '',
+  tpt: '',
 });
 
 const [editPengangguranId, setEditPengangguranId] = useState(null);
 const [csvFile, setCsvFile] = useState(null);
  useEffect(() => {
-  fetch("${API_URL}/api/pdrb")
+  fetch('${API_URL}/api/pdrb')
     .then((res) => res.json())
     .then((data) => setPdrb(data));
 
-  fetch("${API_URL}/api/kemiskinan")
+  fetch('${API_URL}/api/kemiskinan')
     .then((res) => res.json())
     .then((data) => setKemiskinan(data));
 
-  fetch("h${API_URL}/api/pengangguran")
+  fetch('${API_URL}/api/pengangguran')
     .then((res) => res.json())
     .then((data) => setPengangguran(data));
 }, []);
 
 const handleUploadCsvPdrb = async () => {
   if (!csvFile) {
-    alert("Pilih file CSV terlebih dahulu");
+    alert('Pilih file CSV terlebih dahulu');
     return;
   }
 
   const formData = new FormData();
-  formData.append("file", csvFile);
+  formData.append('file', csvFile);
 
   try {
     const response = await fetch(
-      "${API_URL}/api/pdrb/upload",
+      '${API_URL}/api/pdrb/upload',
       {
-        method: "POST",
+        method: 'POST',
         body: formData,
       }
     );
@@ -99,14 +99,14 @@ const handleUploadCsvPdrb = async () => {
 
     alert(data.message);
 
-    fetch("${API_URL}/api/pdrb")
+    fetch('${API_URL}/api/pdrb')
       .then((res) => res.json())
       .then((data) => setPdrb(data));
 
   } catch (error) {
     console.error(error);
 
-    alert("Upload CSV gagal");
+    alert('Upload CSV gagal');
   }
 };
 const handleSubmit = async (e) => {
@@ -115,14 +115,14 @@ const handleSubmit = async (e) => {
   try {
     const url = editPdrbId
   ? `${API_URL}/api/pdrb/${editPdrbId}`
-  : "${API_URL}/api/pdrb";
+  : '${API_URL}/api/pdrb';
 
-const method = editPdrbId ? "PUT" : "POST";
+const method = editPdrbId ? 'PUT' : 'POST';
 
 const response = await fetch(url, {
   method,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formPdrb),
       }
@@ -133,20 +133,20 @@ const response = await fetch(url, {
     alert(data.message);
 
     setFormPdrb({
-      tahun: "",
-      kota: "",
-      sektor: "",
-      nilai_pdrb: "",
+      tahun: '',
+      kota: '',
+      sektor: '',
+      nilai_pdrb: '',
     });
     setEditPdrbId(null);
 
-fetch("${API_URL}/api/pdrb")
+fetch('${API_URL}/api/pdrb')
   .then((res) => res.json())
   .then((data) => setPdrb(data));
 
   } catch (error) {
     console.error(error);
-    alert("Gagal menambahkan data");
+    alert('Gagal menambahkan data');
   }
 };
 const handleSubmitKemiskinan = async (e) => {
@@ -155,16 +155,16 @@ const handleSubmitKemiskinan = async (e) => {
   try {
     const url = editKemiskinanId
   ? `${API_URL}/api/kemiskinan/${editKemiskinanId}`
-  : "${API_URL}/api/kemiskinan";
+  : '${API_URL}/api/kemiskinan';
 
 const method = editKemiskinanId
-  ? "PUT"
-  : "POST";
+  ? 'PUT'
+  : 'POST';
 
 const response = await fetch(url, {
   method,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formKemiskinan),
       }
@@ -175,21 +175,21 @@ const response = await fetch(url, {
     alert(data.message);
 
     setFormKemiskinan({
-      tahun: "",
-      kota: "",
-      jumlah_miskin: "",
-      persentase: "",
+      tahun: '',
+      kota: '',
+      jumlah_miskin: '',
+      persentase: '',
     });
     setEditKemiskinanId(null);
 
     // Refresh data
-    fetch("${API_URL}/api/kemiskinan")
+    fetch('${API_URL}/api/kemiskinan')
       .then((res) => res.json())
       .then((data) => setKemiskinan(data));
 
   } catch (error) {
     console.error(error);
-    alert("Gagal menambahkan data kemiskinan");
+    alert('Gagal menambahkan data kemiskinan');
   }
 };
 
@@ -199,16 +199,16 @@ const handleSubmitPengangguran = async (e) => {
   try {
     const url = editPengangguranId
       ? `${API_URL}/api/pengangguran/${editPengangguranId}`
-      : "${API_URL}/api/pengangguran";
+      : '${API_URL}/api/pengangguran';
 
     const method = editPengangguranId
-      ? "PUT"
-      : "POST";
+      ? 'PUT'
+      : 'POST';
 
     const response = await fetch(url, {
       method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(formPengangguran),
     });
@@ -218,19 +218,19 @@ const handleSubmitPengangguran = async (e) => {
     alert(data.message);
 
     setFormPengangguran({
-      tahun: "",
-      kota: "",
-      tpt: "",
+      tahun: '',
+      kota: '',
+      tpt: '',
     });
     setEditPengangguranId(null);
 
-    fetch("${API_URL}/api/pengangguran")
+    fetch('${API_URL}/api/pengangguran')
       .then((res) => res.json())
       .then((data) => setPengangguran(data));
 
   } catch (error) {
     console.error(error);
-    alert("Gagal menambahkan data pengangguran");
+    alert('Gagal menambahkan data pengangguran');
   }
 };
 const handleEditPdrb = (item) => {
@@ -245,7 +245,7 @@ const handleEditPdrb = (item) => {
 };
 const handleDeletePdrb = async (id) => {
   const konfirmasi = window.confirm(
-    "Yakin ingin menghapus data ini?"
+    'Yakin ingin menghapus data ini?'
   );
 
   if (!konfirmasi) return;
@@ -254,7 +254,7 @@ const handleDeletePdrb = async (id) => {
     const response = await fetch(
       `${API_URL}/api/pdrb/${id}`,
       {
-        method: "DELETE",
+        method: 'DELETE',
       }
     );
 
@@ -262,14 +262,14 @@ const handleDeletePdrb = async (id) => {
 
     alert(data.message);
 
-    fetch("${API_URL}/api/pdrb")
+    fetch('${API_URL}/api/pdrb')
       .then((res) => res.json())
       .then((data) => setPdrb(data));
 
   } catch (error) {
     console.error(error);
 
-    alert("Gagal menghapus data");
+    alert('Gagal menghapus data');
   }
 };
 const handleEditKemiskinan = (item) => {
@@ -288,7 +288,7 @@ const handleDeleteKemiskinan = async (id) => {
     const response = await fetch(
       `${API_URL}/api/kemiskinan/${id}`,
       {
-        method: "DELETE",
+        method: 'DELETE',
       }
     );
 
@@ -303,7 +303,7 @@ const handleDeleteKemiskinan = async (id) => {
     );
   } catch (error) {
     console.error(error);
-    alert("Gagal menghapus data");
+    alert('Gagal menghapus data');
   }
 };
 
@@ -318,7 +318,7 @@ const handleEditPengangguran = (item) => {
 };
 const handleDeletePengangguran = async (id) => {
   const konfirmasi = window.confirm(
-    "Yakin ingin menghapus data ini?"
+    'Yakin ingin menghapus data ini?'
   );
 
   if (!konfirmasi) return;
@@ -327,7 +327,7 @@ const handleDeletePengangguran = async (id) => {
     const response = await fetch(
       `${API_URL}/api/pengangguran/${id}`,
       {
-        method: "DELETE",
+        method: 'DELETE',
       }
     );
 
@@ -335,34 +335,34 @@ const handleDeletePengangguran = async (id) => {
 
     alert(data.message);
 
-    fetch("${API_URL}/api/pengangguran")
+    fetch('${API_URL}/api/pengangguran')
       .then((res) => res.json())
       .then((data) => setPengangguran(data));
 
   } catch (error) {
     console.error(error);
 
-    alert("Gagal menghapus data");
+    alert('Gagal menghapus data');
   }
 };
 
-  console.log("PDRB:", pdrb);
-console.log("Kemiskinan:", kemiskinan);
-console.log("Pengangguran:", pengangguran);
+  console.log('PDRB:', pdrb);
+console.log('Kemiskinan:', kemiskinan);
+console.log('Pengangguran:', pengangguran);
 
 const chartDataPdrb = {
   labels: pdrb.map((item) => item.kota),
 
   datasets: [
     {
-      label: "Nilai PDRB",
+      label: 'Nilai PDRB',
 
       data: pdrb.map(
         (item) => item.nilai_pdrb
       ),
 
       backgroundColor:
-        "rgba(128, 0, 0, 0.7)",
+        'rgba(128, 0, 0, 0.7)',
     },
   ],
 };
@@ -371,14 +371,14 @@ const chartDataKemiskinan = {
 
   datasets: [
     {
-      label: "Jumlah Penduduk Miskin",
+      label: 'Jumlah Penduduk Miskin',
 
       data: kemiskinan.map(
         (item) => item.jumlah_miskin
       ),
 
       backgroundColor:
-        "rgba(128, 0, 0, 0.7)",
+        'rgba(128, 0, 0, 0.7)',
     },
   ],
 };
@@ -389,14 +389,14 @@ const chartDataPengangguran = {
 
   datasets: [
     {
-      label: "Tingkat Pengangguran Terbuka (%)",
+      label: 'Tingkat Pengangguran Terbuka (%)',
 
       data: pengangguran.map(
         (item) => item.tpt
       ),
 
       backgroundColor:
-        "rgba(128, 0, 0, 0.7)",
+        'rgba(128, 0, 0, 0.7)',
     },
   ],
 };
@@ -479,14 +479,14 @@ const exportToExcel = (data, fileName) => {
   XLSX.utils.book_append_sheet(
     workbook,
     worksheet,
-    "Data"
+    'Data'
   );
 
   const excelBuffer = XLSX.write(
     workbook,
     {
-      bookType: "xlsx",
-      type: "array",
+      bookType: 'xlsx',
+      type: 'array',
     }
   );
 
@@ -494,19 +494,19 @@ const exportToExcel = (data, fileName) => {
     [excelBuffer],
     {
       type:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     }
   );
 
   saveAs(fileData, `${fileName}.xlsx`);
 };
   return (
-    <div className="dashboard">
+    <div className='dashboard'>
       <h1>Dashboard Ekonomi Daerah</h1>
       <div
   style={{
-    width: "90%",
-    margin: "30px auto",
+    width: '90%',
+    margin: '30px auto',
   }}
 >
   <h2>Grafik PDRB Daerah</h2>
@@ -515,8 +515,8 @@ const exportToExcel = (data, fileName) => {
 </div>
 <div
   style={{
-    width: "90%",
-    margin: "30px auto",
+    width: '90%',
+    margin: '30px auto',
   }}
 >
   <h2>Grafik Kemiskinan</h2>
@@ -524,8 +524,8 @@ const exportToExcel = (data, fileName) => {
   <Bar data={chartDataKemiskinan} />
   <div
   style={{
-    width: "90%",
-    margin: "30px auto",
+    width: '90%',
+    margin: '30px auto',
   }}
 >
   <h2>Grafik Pengangguran</h2>
@@ -535,38 +535,38 @@ const exportToExcel = (data, fileName) => {
 
 </div>
 
-      <div className="summary-cards">
+      <div className='summary-cards'>
 
-  <div className="card">
+  <div className='card'>
     <h2>{pdrb.length}</h2>
     <p>Data PDRB</p>
   </div>
 
-  <div className="card">
+  <div className='card'>
     <h2>{kemiskinan.length}</h2>
     <p>Data Kemiskinan</p>
   </div>
 
-  <div className="card">
+  <div className='card'>
     <h2>{pengangguran.length}</h2>
     <p>Data Pengangguran</p>
   </div>
 
 </div>
 
-    <div className="table-section">
+    <div className='table-section'>
       <h2>Tambah Data PDRB</h2>
-      <div style={{ marginBottom: "20px" }}>
+      <div style={{ marginBottom: '20px' }}>
   <input
-    type="file"
-    accept=".csv"
+    type='file'
+    accept='.csv'
     onChange={(e) =>
       setCsvFile(e.target.files[0])
     }
   />
 
   <button
-    type="button"
+    type='button'
     onClick={handleUploadCsvPdrb}
   >
     Upload CSV
@@ -575,8 +575,8 @@ const exportToExcel = (data, fileName) => {
 
 <form onSubmit={handleSubmit}>  
   <input
-    type="number"
-    placeholder="Tahun"
+    type='number'
+    placeholder='Tahun'
     value={formPdrb.tahun}
     onChange={(e) =>
       setFormPdrb({
@@ -587,8 +587,8 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="text"
-    placeholder="Kota"
+    type='text'
+    placeholder='Kota'
     value={formPdrb.kota}
     onChange={(e) =>
       setFormPdrb({
@@ -599,8 +599,8 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="text"
-    placeholder="Sektor"
+    type='text'
+    placeholder='Sektor'
     value={formPdrb.sektor}
     onChange={(e) =>
       setFormPdrb({
@@ -611,8 +611,8 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="number"
-    placeholder="Nilai PDRB"
+    type='number'
+    placeholder='Nilai PDRB'
     value={formPdrb.nilai_pdrb}
     onChange={(e) =>
       setFormPdrb({
@@ -622,8 +622,8 @@ const exportToExcel = (data, fileName) => {
     }
   />
 
-  <button type="submit">
-  {editPdrbId ? "Update" : "Tambah"}
+  <button type='submit'>
+  {editPdrbId ? 'Update' : 'Tambah'}
 </button>
 </form>
   <h2>Data PDRB</h2>
@@ -631,23 +631,23 @@ const exportToExcel = (data, fileName) => {
   onClick={() =>
     exportToExcel(
       pdrb,
-      "Data_PDRB"
+      'Data_PDRB'
     )
   }
 >
   Export Excel
 </button>
   <input
-  className="search-box"
-  type="text"
-  placeholder="Cari kota PDRB..."
+  className='search-box'
+  type='text'
+  placeholder='Cari kota PDRB...'
   value={searchPdrb}
   onChange={(e) =>
     setSearchPdrb(e.target.value)
   }
 />
 
-  <table border="1" cellPadding="10">
+  <table border='1' cellPadding='10'>
 <thead>
   <tr>
     <th>Tahun</th>
@@ -665,7 +665,7 @@ const exportToExcel = (data, fileName) => {
           <td>{item.kota}</td>
           <td>{item.sektor}</td>
           <td>
-            Rp {Number(item.nilai_pdrb).toLocaleString("id-ID")}
+            Rp {Number(item.nilai_pdrb).toLocaleString('id-ID')}
           </td>
          <td>
   <button
@@ -684,7 +684,7 @@ const exportToExcel = (data, fileName) => {
       ))}
     </tbody>
   </table>
-  <div style={{ marginTop: "15px" }}>
+  <div style={{ marginTop: '15px' }}>
   <button
     disabled={currentPagePdrb === 1}
     onClick={() =>
@@ -698,10 +698,10 @@ const exportToExcel = (data, fileName) => {
 
   <span
     style={{
-      margin: "0 15px",
+      margin: '0 15px',
     }}
   >
-    Halaman {currentPagePdrb} dari{" "}
+    Halaman {currentPagePdrb} dari{' '}
     {totalPagesPdrb}
   </span>
 
@@ -722,13 +722,13 @@ const exportToExcel = (data, fileName) => {
 
 </div>
 
-      <div className="table-section">
+      <div className='table-section'>
         <h2>Tambah Data Kemiskinan</h2>
 
 <form onSubmit={handleSubmitKemiskinan}>
   <input
-    type="number"
-    placeholder="Tahun"
+    type='number'
+    placeholder='Tahun'
     value={formKemiskinan.tahun}
     onChange={(e) =>
       setFormKemiskinan({
@@ -739,8 +739,8 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="text"
-    placeholder="Kota"
+    type='text'
+    placeholder='Kota'
     value={formKemiskinan.kota}
     onChange={(e) =>
       setFormKemiskinan({
@@ -751,8 +751,8 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="number"
-    placeholder="Jumlah Miskin"
+    type='number'
+    placeholder='Jumlah Miskin'
     value={formKemiskinan.jumlah_miskin}
     onChange={(e) =>
       setFormKemiskinan({
@@ -763,9 +763,9 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="number"
-    step="0.01"
-    placeholder="Persentase"
+    type='number'
+    step='0.01'
+    placeholder='Persentase'
     value={formKemiskinan.persentase}
     onChange={(e) =>
       setFormKemiskinan({
@@ -775,10 +775,10 @@ const exportToExcel = (data, fileName) => {
     }
   />
 
-  <button type="submit">
+  <button type='submit'>
   {editKemiskinanId
-    ? "Update"
-    : "Tambah"}
+    ? 'Update'
+    : 'Tambah'}
 </button>
 </form>
   <h2>Data Kemiskinan</h2>
@@ -786,22 +786,22 @@ const exportToExcel = (data, fileName) => {
   onClick={() =>
     exportToExcel(
       kemiskinan,
-      "Data_Kemiskinan"
+      'Data_Kemiskinan'
     )
   }
 >
   Export Excel
 </button>
   <input
-  className="search-box"
-  type="text"
-  placeholder="Cari kota Kemiskinan..."
+  className='search-box'
+  type='text'
+  placeholder='Cari kota Kemiskinan...'
   value={searchKemiskinan}
   onChange={(e) =>
     setSearchKemiskinan(e.target.value)
   }
 />
-  <table border="1" cellPadding="10">
+  <table border='1' cellPadding='10'>
     <thead>
   <tr>
     <th>Tahun</th>
@@ -840,7 +840,7 @@ const exportToExcel = (data, fileName) => {
       ))}
     </tbody>
   </table>
-  <div style={{ marginTop: "15px" }}>
+  <div style={{ marginTop: '15px' }}>
   <button
     disabled={currentPageKemiskinan === 1}
     onClick={() =>
@@ -852,8 +852,8 @@ const exportToExcel = (data, fileName) => {
     Sebelumnya
   </button>
 
-  <span style={{ margin: "0 15px" }}>
-    Halaman {currentPageKemiskinan} dari{" "}
+  <span style={{ margin: '0 15px' }}>
+    Halaman {currentPageKemiskinan} dari{' '}
     {totalPagesKemiskinan}
   </span>
 
@@ -874,13 +874,13 @@ const exportToExcel = (data, fileName) => {
 
 </div>
 
-<div className="table-section">
+<div className='table-section'>
   <h2>Tambah Data Pengangguran</h2>
 
 <form onSubmit={handleSubmitPengangguran}>
   <input
-    type="number"
-    placeholder="Tahun"
+    type='number'
+    placeholder='Tahun'
     value={formPengangguran.tahun}
     onChange={(e) =>
       setFormPengangguran({
@@ -891,8 +891,8 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="text"
-    placeholder="Kota"
+    type='text'
+    placeholder='Kota'
     value={formPengangguran.kota}
     onChange={(e) =>
       setFormPengangguran({
@@ -903,9 +903,9 @@ const exportToExcel = (data, fileName) => {
   />
 
   <input
-    type="number"
-    step="0.01"
-    placeholder="TPT"
+    type='number'
+    step='0.01'
+    placeholder='TPT'
     value={formPengangguran.tpt}
     onChange={(e) =>
       setFormPengangguran({
@@ -915,10 +915,10 @@ const exportToExcel = (data, fileName) => {
     }
   />
 
-  <button type="submit">
+  <button type='submit'>
   {editPengangguranId
-    ? "Update"
-    : "Tambah"}
+    ? 'Update'
+    : 'Tambah'}
 </button>
 </form>
 
@@ -927,23 +927,23 @@ const exportToExcel = (data, fileName) => {
   onClick={() =>
     exportToExcel(
       pengangguran,
-      "Data_Pengangguran"
+      'Data_Pengangguran'
     )
   }
 >
   Export Excel
 </button>
   <input
-  className="search-box"
-  type="text"
-  placeholder="Cari kota Pengangguran..."
+  className='search-box'
+  type='text'
+  placeholder='Cari kota Pengangguran...'
   value={searchPengangguran}
   onChange={(e) =>
     setSearchPengangguran(e.target.value)
   }
 />
 
-  <table border="1" cellPadding="10">
+  <table border='1' cellPadding='10'>
     <thead>
       <tr>
         <th>Tahun</th>
@@ -980,7 +980,7 @@ const exportToExcel = (data, fileName) => {
       ))}
     </tbody>
   </table>
-  <div style={{ marginTop: "15px" }}>
+  <div style={{ marginTop: '15px' }}>
   <button
     disabled={
       currentPagePengangguran === 1
@@ -994,8 +994,8 @@ const exportToExcel = (data, fileName) => {
     Sebelumnya
   </button>
 
-  <span style={{ margin: "0 15px" }}>
-    Halaman {currentPagePengangguran} dari{" "}
+  <span style={{ margin: '0 15px' }}>
+    Halaman {currentPagePengangguran} dari{' '}
     {totalPagesPengangguran}
   </span>
 
