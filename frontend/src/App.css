@@ -304,3 +304,41 @@ button:disabled {
   box-shadow:
     0 10px 25px rgba(0,0,0,.08);
 }
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  background:white;
+
+  padding:20px 40px;
+
+  border-radius:20px;
+
+  margin-bottom:30px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+}
+
+.logo{
+  font-size:24px;
+  font-weight:700;
+  color:#173B6C;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:#173B6C;
+  font-weight:600;
+}
+
+.nav-links a:hover{
+  color:#00A8E8;
+}

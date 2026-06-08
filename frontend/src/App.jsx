@@ -503,6 +503,19 @@ const exportToExcel = (data, fileName) => {
   return (
   <div className='dashboard'>
 
+    <nav className="navbar">
+  <div className="logo">
+    📊 Database Ekonomi Daerah
+  </div>
+
+  <div className="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Grafik</a>
+    <a href="#">Data</a>
+    <a href="#">Export</a>
+  </div>
+</nav>
+
     <div className="hero">
       <div className="hero-content">
         <h1>Database Ekonomi Daerah</h1>
