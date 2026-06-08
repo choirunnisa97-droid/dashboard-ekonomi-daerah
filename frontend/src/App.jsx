@@ -501,15 +501,41 @@ const exportToExcel = (data, fileName) => {
   saveAs(fileData, `${fileName}.xlsx`);
 };
   return (
-    <div className='dashboard'>
-      <h1>Dashboard Ekonomi Daerah</h1>
-      <div
-  style={{
-    width: '90%',
-    margin: '30px auto',
-  }}
->
-  <h2>Grafik PDRB Daerah</h2>
+  <div className='dashboard'>
+
+    <div className="hero">
+      <div className="hero-content">
+        <h1>Database Ekonomi Daerah</h1>
+
+        <p>
+          Sistem Informasi PDRB, Kemiskinan,
+          dan Pengangguran berbasis React,
+          Express, MySQL, Railway dan Vercel.
+        </p>
+      </div>
+    </div>
+
+    <div className="chart-card">
+
+      <div className="stats-container">
+
+  <div className="stat-card">
+    <h3>PDRB</h3>
+    <p>{pdrb.length} Data</p>
+  </div>
+
+  <div className="stat-card">
+    <h3>Kemiskinan</h3>
+    <p>{kemiskinan.length} Data</p>
+  </div>
+
+  <div className="stat-card">
+    <h3>Pengangguran</h3>
+    <p>{pengangguran.length} Data</p>
+  </div>
+
+</div>
+      <h2>Grafik PDRB Daerah</h2>
 
   <Bar data={chartDataPdrb} />
 </div>

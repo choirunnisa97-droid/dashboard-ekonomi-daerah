@@ -1,7 +1,14 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
-  margin: 0;
+:root{
+  --primary:#00A8E8;
+  --secondary:#173B6C;
+  --bg:#F5F8FC;
+  --card:#FFFFFF;
+  --text:#1F2937;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:Inter,sans-serif;
 }
 
 .dashboard {
@@ -217,4 +224,83 @@ table button:hover {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.hero{
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #eaf6ff
+  );
+
+  padding: 70px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.hero h1{
+  font-size: 52px;
+  color: #173B6C;
+  margin-bottom: 15px;
+}
+
+.hero p{
+  color: #555;
+  font-size: 20px;
+  max-width: 700px;
+}
+
+.stats-container{
+  display:flex;
+  gap:20px;
+  margin-bottom:40px;
+  flex-wrap:wrap;
+}
+
+.stat-card{
+  flex:1;
+  min-width:220px;
+
+  background:white;
+
+  border-radius:18px;
+
+  padding:25px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+
+  transition:.3s;
+}
+
+.stat-card:hover{
+  transform:translateY(-5px);
+}
+
+.stat-card h3{
+  color:#173B6C;
+  margin-bottom:10px;
+}
+
+.stat-card p{
+  font-size:28px;
+  font-weight:700;
+  color:#00A8E8;
+}
+
+.chart-card{
+  background:white;
+
+  padding:30px;
+
+  margin:30px auto;
+
+  width:90%;
+
+  border-radius:20px;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
 }
