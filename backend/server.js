@@ -410,3 +410,33 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server berjalan di port ${PORT}`);
 });
+
+app.get("/api/news", async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://gnews.io/api/v4/search?q=ekonomi%20indonesia&lang=id&max=6&apikey=43bb5d1024da6abb8a789102514f3c3b"
+    );
+
+    const data = await response.json();
+
+    res.json(data.articles || []);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json([]);
+  }
+});
+
+app.get("/api/news", async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://gnews.io/api/v4/search?q=ekonomi&lang=id&max=6&apikey=43bb5d1024da6abb8a789102514f3c3b"
+    );
+
+    const data = await response.json();
+
+    res.json(data.articles || []);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json([]);
+  }
+});
