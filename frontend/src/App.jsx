@@ -155,7 +155,7 @@ const handleSubmitKemiskinan = async (e) => {
   try {
     const url = editKemiskinanId
   ? `${API_URL}/api/kemiskinan/${editKemiskinanId}`
-  : '${API_URL}/api/kemiskinan';
+  : `${API_URL}/api/kemiskinan`;
 
 const method = editKemiskinanId
   ? 'PUT'
@@ -183,7 +183,7 @@ const response = await fetch(url, {
     setEditKemiskinanId(null);
 
     // Refresh data
-    fetch('${API_URL}/api/kemiskinan')
+    fetch(`${API_URL}/api/kemiskinan`)
       .then((res) => res.json())
       .then((data) => setKemiskinan(data));
 
@@ -199,7 +199,7 @@ const handleSubmitPengangguran = async (e) => {
   try {
     const url = editPengangguranId
       ? `${API_URL}/api/pengangguran/${editPengangguranId}`
-      : '${API_URL}/api/pengangguran';
+      : `${API_URL}/api/pengangguran`;
 
     const method = editPengangguranId
       ? 'PUT'
@@ -224,7 +224,7 @@ const handleSubmitPengangguran = async (e) => {
     });
     setEditPengangguranId(null);
 
-    fetch('${API_URL}/api/pengangguran')
+    fetch(`${API_URL}/api/pengangguran`)
       .then((res) => res.json())
       .then((data) => setPengangguran(data));
 
@@ -335,7 +335,7 @@ const handleDeletePengangguran = async (id) => {
 
     alert(data.message);
 
-    fetch('${API_URL}/api/pengangguran')
+    fetch(`${API_URL}/api/pengangguran`)
       .then((res) => res.json())
       .then((data) => setPengangguran(data));
 
