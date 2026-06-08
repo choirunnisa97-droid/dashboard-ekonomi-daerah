@@ -31,6 +31,8 @@ function App() {
   const [pengangguran, setPengangguran] = useState([]);
   const [searchPdrb, setSearchPdrb] = useState('');
 
+const [news, setNews] = useState([]);
+
 const [searchKemiskinan, setSearchKemiskinan] = useState('');
 
 const [searchPengangguran, setSearchPengangguran] = useState('');
@@ -63,6 +65,7 @@ const [formPengangguran, setFormPengangguran] = useState({
 
 const [editPengangguranId, setEditPengangguranId] = useState(null);
 const [csvFile, setCsvFile] = useState(null);
+  
  useEffect(() => {
   fetch(`${API_URL}/api/pdrb`)
     .then((res) => res.json())
@@ -75,6 +78,7 @@ const [csvFile, setCsvFile] = useState(null);
   fetch(`${API_URL}/api/pengangguran`)
     .then((res) => res.json())
     .then((data) => setPengangguran(data));
+
 }, []);
 
 const handleUploadCsvPdrb = async () => {
@@ -346,10 +350,6 @@ const handleDeletePengangguran = async (id) => {
   }
 };
 
-  console.log('PDRB:', pdrb);
-console.log('Kemiskinan:', kemiskinan);
-console.log('Pengangguran:', pengangguran);
-
 const chartDataPdrb = {
   labels: pdrb.map((item) => item.kota),
 
@@ -361,8 +361,7 @@ const chartDataPdrb = {
         (item) => item.nilai_pdrb
       ),
 
-      backgroundColor:
-        'rgba(128, 0, 0, 0.7)',
+      backgroundColor: 'rgba(59, 130, 246, 0.8)'
     },
   ],
 };
@@ -377,8 +376,7 @@ const chartDataKemiskinan = {
         (item) => item.jumlah_miskin
       ),
 
-      backgroundColor:
-        'rgba(128, 0, 0, 0.7)',
+      backgroundColor: 'rgba(244, 114, 182, 0.8)'
     },
   ],
 };
@@ -395,8 +393,7 @@ const chartDataPengangguran = {
         (item) => item.tpt
       ),
 
-      backgroundColor:
-        'rgba(128, 0, 0, 0.7)',
+      backgroundColor: 'rgba(168, 85, 247, 0.8)'
     },
   ],
 };
@@ -501,34 +498,36 @@ const exportToExcel = (data, fileName) => {
   saveAs(fileData, `${fileName}.xlsx`);
 };
   return (
+
   <div className='dashboard'>
 
-    <nav className="navbar">
-  <div className="logo">
-    📊 Database Ekonomi Daerah
+<div className="sidebar">
+
+  <h2>📊 Database Ekonomi</h2>
+
+  <a href="#home">🏠 Home</a>
+  <a href="#grafik">📈 Grafik</a>
+  <a href="#data">📋 Data</a>
+  <a href="#export">📤 Export</a>
+
+</div>
+
+<div className="main-content">
+
+<div className="hero" id="home">
+  <div className="hero-left">
+    <h1>Database Ekonomi Daerah</h1>
+
+    <p>
+      Sistem informasi ekonomi daerah berbasis
+      React, Express, MySQL dan Railway.
+    </p>
+
   </div>
 
-  <div className="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Grafik</a>
-    <a href="#">Data</a>
-    <a href="#">Export</a>
-  </div>
-</nav>
+</div>
 
-    <div className="hero">
-      <div className="hero-content">
-        <h1>Database Ekonomi Daerah</h1>
-
-        <p>
-          Sistem Informasi PDRB, Kemiskinan,
-          dan Pengangguran berbasis React,
-          Express, MySQL, Railway dan Vercel.
-        </p>
-      </div>
-    </div>
-
-    <div className="chart-card">
+    <div className="chart-card" id="grafik">
 
       <div className="stats-container">
 
@@ -548,53 +547,51 @@ const exportToExcel = (data, fileName) => {
   </div>
 
 </div>
-      <h2>Grafik PDRB Daerah</h2>
+<h2 className="section-title">📈 Grafik PDRB Daerah</h2>
 
-  <Bar data={chartDataPdrb} />
-</div>
-<div
-  style={{
-    width: '90%',
-    margin: '30px auto',
+ <Bar
+  data={chartDataPdrb}
+  options={{
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   }}
->
-  <h2>Grafik Kemiskinan</h2>
+/>
+</div>
 
-  <Bar data={chartDataKemiskinan} />
-  <div
-  style={{
-    width: '90%',
-    margin: '30px auto',
+<div className="chart-card">
+<h2 className="section-title">📊 Grafik Kemiskinan</h2>
+ <Bar
+  data={chartDataKemiskinan}
+  options={{
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   }}
->
-  <h2>Grafik Pengangguran</h2>
-
-  <Bar data={chartDataPengangguran} />
+/>
 </div>
 
+<div className="chart-card">
+<h2 className="section-title">📉 Grafik Pengangguran</h2>
+<Bar
+  data={chartDataPengangguran}
+  options={{
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  }}
+/>
 </div>
 
-      <div className='summary-cards'>
-
-  <div className='card'>
-    <h2>{pdrb.length}</h2>
-    <p>Data PDRB</p>
-  </div>
-
-  <div className='card'>
-    <h2>{kemiskinan.length}</h2>
-    <p>Data Kemiskinan</p>
-  </div>
-
-  <div className='card'>
-    <h2>{pengangguran.length}</h2>
-    <p>Data Pengangguran</p>
-  </div>
-
-</div>
-
-    <div className='table-section'>
+    <div className='table-section' id="data">
       <h2>Tambah Data PDRB</h2>
+
       <div style={{ marginBottom: '20px' }}>
   <input
     type='file'
@@ -612,7 +609,9 @@ const exportToExcel = (data, fileName) => {
   </button>
 </div>
 
-<form onSubmit={handleSubmit}>  
+<div className="form-card">
+
+<form onSubmit={handleSubmit}>
   <input
     type='number'
     placeholder='Tahun'
@@ -665,8 +664,12 @@ const exportToExcel = (data, fileName) => {
   {editPdrbId ? 'Update' : 'Tambah'}
 </button>
 </form>
-  <h2>Data PDRB</h2>
+
+</div>
+
+<h2 className="section-title">Data PDRB</h2>
   <button
+  id="export"
   onClick={() =>
     exportToExcel(
       pdrb,
@@ -762,7 +765,9 @@ const exportToExcel = (data, fileName) => {
 </div>
 
       <div className='table-section'>
-        <h2>Tambah Data Kemiskinan</h2>
+       <h2>Tambah Data Kemiskinan</h2>
+
+<div className="form-card">
 
 <form onSubmit={handleSubmitKemiskinan}>
   <input
@@ -820,7 +825,9 @@ const exportToExcel = (data, fileName) => {
     : 'Tambah'}
 </button>
 </form>
-  <h2>Data Kemiskinan</h2>
+</div>
+
+  <h2 className="section-title">Data Kemiskinan</h2>
   <button
   onClick={() =>
     exportToExcel(
@@ -916,6 +923,8 @@ const exportToExcel = (data, fileName) => {
 <div className='table-section'>
   <h2>Tambah Data Pengangguran</h2>
 
+<div className="form-card">
+
 <form onSubmit={handleSubmitPengangguran}>
   <input
     type='number'
@@ -960,8 +969,9 @@ const exportToExcel = (data, fileName) => {
     : 'Tambah'}
 </button>
 </form>
+</div>
 
-  <h2>Data Pengangguran</h2>
+  <h2 className="section-title">Data Pengangguran</h2>
   <button
   onClick={() =>
     exportToExcel(
@@ -1054,8 +1064,12 @@ const exportToExcel = (data, fileName) => {
 </div>
 
 </div>
-    </div>
-  );
+
+</div>
+
+</div>
+
+);
 }
 
 export default App;
