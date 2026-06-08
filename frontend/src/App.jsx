@@ -64,15 +64,15 @@ const [formPengangguran, setFormPengangguran] = useState({
 const [editPengangguranId, setEditPengangguranId] = useState(null);
 const [csvFile, setCsvFile] = useState(null);
  useEffect(() => {
-  fetch('${API_URL}/api/pdrb')
+  fetch(`${API_URL}/api/pdrb`)
     .then((res) => res.json())
     .then((data) => setPdrb(data));
 
-  fetch('${API_URL}/api/kemiskinan')
+  fetch(`${API_URL}/api/kemiskinan`)
     .then((res) => res.json())
     .then((data) => setKemiskinan(data));
 
-  fetch('${API_URL}/api/pengangguran')
+  fetch(`${API_URL}/api/pengangguran`)
     .then((res) => res.json())
     .then((data) => setPengangguran(data));
 }, []);
@@ -88,7 +88,7 @@ const handleUploadCsvPdrb = async () => {
 
   try {
     const response = await fetch(
-      '${API_URL}/api/pdrb/upload',
+      `${API_URL}/api/pdrb/upload`,
       {
         method: 'POST',
         body: formData,
@@ -99,7 +99,7 @@ const handleUploadCsvPdrb = async () => {
 
     alert(data.message);
 
-    fetch('${API_URL}/api/pdrb')
+    fetch(`${API_URL}/api/pdrb`)
       .then((res) => res.json())
       .then((data) => setPdrb(data));
 
@@ -115,7 +115,7 @@ const handleSubmit = async (e) => {
   try {
     const url = editPdrbId
   ? `${API_URL}/api/pdrb/${editPdrbId}`
-  : '${API_URL}/api/pdrb';
+  : `${API_URL}/api/pdrb`;
 
 const method = editPdrbId ? 'PUT' : 'POST';
 
@@ -140,7 +140,7 @@ const response = await fetch(url, {
     });
     setEditPdrbId(null);
 
-fetch('${API_URL}/api/pdrb')
+fetch(`${API_URL}/api/pdrb`)
   .then((res) => res.json())
   .then((data) => setPdrb(data));
 
@@ -262,7 +262,7 @@ const handleDeletePdrb = async (id) => {
 
     alert(data.message);
 
-    fetch('${API_URL}/api/pdrb')
+    fetch(`${API_URL}/api/pdrb`)
       .then((res) => res.json())
       .then((data) => setPdrb(data));
 
